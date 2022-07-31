@@ -74,9 +74,9 @@ class Running(Training):
         coeff_calorie_1 = 18
         coeff_calorie_2 = 20
         duration_minute = self.duration * self.MIN_IN_HOUR
-        spent_calories = ((coeff_calorie_1 * self.get_mean_speed() -
-                           coeff_calorie_2) * self.weight /
-                          self.M_IN_KM * duration_minute)
+        spent_calories = ((coeff_calorie_1 * self.get_mean_speed()
+                           - coeff_calorie_2) * self.weight
+                          / self.M_IN_KM * duration_minute)
         return spent_calories
 
 
@@ -99,9 +99,9 @@ class SportsWalking(Training):
         coeff_calorie_2 = 2
         coeff_calorie_3 = 0.029
         duration_minute = self.duration * self.MIN_IN_HOUR
-        spent_calories = (((self.get_mean_speed() ** coeff_calorie_2 //
-                           self.height) * coeff_calorie_3 * self.weight +
-                          coeff_calorie_1 * self.weight) * duration_minute)
+        spent_calories = (((self.get_mean_speed() ** coeff_calorie_2
+                           // self.height) * coeff_calorie_3 * self.weight
+                          + coeff_calorie_1 * self.weight) * duration_minute)
         return spent_calories
 
 
@@ -124,8 +124,8 @@ class Swimming(Training):
     def get_mean_speed(self) -> float:
         """Получить среднюю скорость движения."""
 
-        mean_speed = (self.length_pool * self.count_pool / self.M_IN_KM /
-                      self.duration)
+        mean_speed = (self.length_pool * self.count_pool / self.M_IN_KM
+                      / self.duration)
         return mean_speed
 
     def get_spent_calories(self) -> float:
@@ -133,8 +133,8 @@ class Swimming(Training):
 
         coeff_calorie_1 = 1.1
         coeff_calorie_2 = 2
-        spent_calories = ((self.get_mean_speed() + coeff_calorie_1) *
-                          coeff_calorie_2 * self.weight)
+        spent_calories = ((self.get_mean_speed() + coeff_calorie_1)
+                          * coeff_calorie_2 * self.weight)
         return spent_calories
 
 
