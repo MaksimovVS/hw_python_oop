@@ -101,9 +101,11 @@ class SportsWalking(Training):
         """Получить количество затраченных калорий."""
 
         duration_minute = self.duration * self.MIN_IN_HOUR
-        spent_calories = (((self.get_mean_speed() ** self.QUADRATIC_SPEED_FACTOR
-                           // self.height) * self.COEFF_CALORIE_2 * self.weight
-                          + self.COEFF_CALORIE_1 * self.weight) * duration_minute)
+        spent_calories = (((self.get_mean_speed()
+                            ** self.QUADRATIC_SPEED_FACTOR // self.height)
+                           * self.COEFF_CALORIE_2 * self.weight
+                           + self.COEFF_CALORIE_1 * self.weight)
+                          * duration_minute)
         return spent_calories
 
 
