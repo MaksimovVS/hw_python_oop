@@ -13,11 +13,14 @@ class InfoMessage:
         self.distance = distance
         self.speed = speed
         self.calories = calories
+    
+   
 
     def get_message(self) -> str:
         """Возвращает строку сообщения с данными о тренировке."""
 
         duration = rounding(self.duration)
+        #duration = 15.0.rounding()
         distance = rounding(self.distance)
         speed = rounding(self.speed)
         calories = rounding(self.calories)
@@ -143,14 +146,24 @@ class Swimming(Training):
 
 
 def read_package(workout_type: str, data: list) -> Training:
-    """Прочитать данные полученные от датчиков."""
+    """Прочитать данные полученные от датчиков, проверить валидность
+    данных."""
 
     dict_workout_type = {
         'SWM': Swimming,
         'RUN': Running,
         'WLK': SportsWalking,
     }
-    return dict_workout_type.get(workout_type)(*data)
+    
+    if workout_type not in dict_workout_type:
+        raise ValueError("The unexpected importance of a sport:",
+        workout_type)
+    for value in data:
+        value_str = str(value)
+        if not value_str.isdigit():
+            raise ValueError("Unexpected readings from sensors")
+
+    return (dict_workout_type.get(workout_type)(*data))
 
 
 def main(training: Training) -> None:
@@ -160,7 +173,7 @@ def main(training: Training) -> None:
     print(info.get_message())
 
 
-def rounding(numeric: float, digit: int = 3) -> float:
+def rounding(numeric: float, digit: int = 3) -> str:
     """Округляет значение до определенного знака после запятой."""
 
     return f"{numeric:.{digit}f}"
@@ -176,3 +189,9 @@ if __name__ == "__main__":
     for workout_type, data in packages:
         training = read_package(workout_type, data)
         main(training)
+
+
+''' #@staticmethod
+    def rounding(numeric: float, digit: int = 3) -> str:
+        """Округляет значение до определенного знака после запятой."""
+        return f"{numeric:.{digit}f}"'''
