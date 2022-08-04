@@ -148,15 +148,21 @@ def read_package(workout_type: str, data: list) -> Training:
         'RUN': Running,
         'WLK': SportsWalking,
     }
-    if workout_type not in valid_workout_type:
-        raise ValueError("The unexpected importance of a sport:",
-                         workout_type)
-    for value in data:
-        value_str = str(value)
-        if not value_str.isdigit():
-            raise ValueError("Unexpected readings from sensors")
 
-    return (valid_workout_type.get(workout_type)(*data))
+    try:
+        valid_workout_type[workout_type](*data)
+    except KeyError:
+        print(f"The unexpected importance of a sport: '{workout_type}'\n"
+              f"Expected values {valid_workout_type.keys()}")
+
+    for value in data:
+        if not isinstance(value, int):
+            print("\nUnexpected readings from sensors\n")
+        elif value < 0:
+            raise ValueError("Unexpected readings from sensors"
+                             "\nValue cannot be negative")
+
+    return (valid_workout_type[workout_type](*data))
 
 
 def main(training: Training) -> None:
